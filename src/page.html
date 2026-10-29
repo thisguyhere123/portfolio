@@ -1,12 +1,13 @@
 <title>Eben's Projects</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Projects by Eben: web tools, public-data sites, AI research pipelines and Unity games.">
+<meta name="description" content="Eben, software engineer: full-stack web products, public-data sites, AI pipelines and Unity games, built and shipped end to end.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: a project ledger. Name and pitch on top, a filter row, then one full-width entry per project
-   with a mono spec line, a single proof figure, what's notable, and the stack. */
+/* Layout: two columns on wide screens. Left column is sticky: name, role, one-line pitch, contact, section nav.
+   Right column scrolls: about, featured case studies (image + problem / what I built / result), more projects,
+   skills. On phones it becomes one column with the intro first. */
 :root {
   --bg: #f3f5f4;
   --surface: #ffffff;
@@ -14,9 +15,9 @@
   --muted: #56655e;
   --line: #d3dcd7;
   --accent: #2448d8;
+  --accent-soft: #e4e9fb;
   --accent-ink: #ffffff;
   --live: #1d7a46;
-  --wip: #8a5a00;
   --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
   --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
@@ -24,232 +25,303 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #0e1412; --surface: #151d1a; --ink: #e4ebe7; --muted: #9aaba3; --line: #2a3632;
-    --accent: #8ea6ff; --accent-ink: #0e1412; --live: #5fd08f; --wip: #e3b45a; color-scheme: dark;
+    --accent: #8ea6ff; --accent-soft: #1c2440; --accent-ink: #0e1412; --live: #5fd08f; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #0e1412; --surface: #151d1a; --ink: #e4ebe7; --muted: #9aaba3; --line: #2a3632;
-  --accent: #8ea6ff; --accent-ink: #0e1412; --live: #5fd08f; --wip: #e3b45a; color-scheme: dark;
+  --accent: #8ea6ff; --accent-soft: #1c2440; --accent-ink: #0e1412; --live: #5fd08f; color-scheme: dark;
 }
 * { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body {
-  background: var(--bg); color: var(--ink); font: 16px/1.6 var(--body);
+  background: var(--bg); color: var(--ink); font: 16px/1.65 var(--body);
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
-.wrap { max-width: 980px; margin: 0 auto; padding-block: 56px 72px; display: grid; gap: 48px; }
 a { color: var(--accent); text-underline-offset: 3px; }
-a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; }
+p { margin: 0; }
 
-header { display: grid; gap: 18px; }
-.eyebrow { font: 500 13px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-h1 { font-size: clamp(2.4rem, 7vw, 4.4rem); line-height: 1.02; font-weight: 700; letter-spacing: -.02em; max-width: 16ch; }
-h1 em { font-style: normal; color: var(--accent); }
-.pitch { font-size: 1.125rem; color: var(--muted); max-width: 60ch; margin: 0; }
-.contact { display: flex; flex-wrap: wrap; gap: 10px 22px; font: 500 14px/1.4 var(--mono); }
+.shell { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 64px; }
+.side { position: sticky; top: env(safe-area-inset-top, 0px); align-self: start; min-height: 100vh; padding-block: 88px 48px;
+  display: flex; flex-direction: column; gap: 28px; }
+.content { padding-block: 88px 64px; display: grid; gap: 88px; min-width: 0; }
 
-.filterbar, .filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.filterbar > span { font: 500 13px/1 var(--mono); color: var(--muted); margin-right: 6px; }
-.filters button {
-  font: 500 14px/1 var(--body); color: var(--ink); background: transparent; cursor: pointer;
-  border: 1px solid var(--line); border-radius: 999px; padding: 9px 14px;
+h1 { font-size: clamp(2.6rem, 5vw, 3.6rem); line-height: 1; font-weight: 700; letter-spacing: -.02em; }
+.role { font: 600 1.25rem/1.3 var(--display); }
+.pitch { color: var(--muted); max-width: 34ch; }
+.avail { display: inline-flex; align-items: center; gap: 8px; font: 500 13px/1.3 var(--mono); color: var(--live); }
+.avail::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex: none; }
+
+.toc { display: grid; gap: 2px; list-style: none; padding: 0; margin: 8px 0 0; }
+.toc a { display: inline-flex; align-items: center; gap: 14px; padding: 8px 0; text-decoration: none; color: var(--muted);
+  font: 500 12.5px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+.toc a::before { content: ""; width: 28px; height: 1px; background: currentColor; transition: width .2s; }
+.toc a:hover, .toc a.on { color: var(--ink); }
+.toc a:hover::before, .toc a.on::before { width: 60px; }
+
+.contact { margin-top: auto; display: flex; flex-wrap: wrap; gap: 10px 20px; font: 500 14px/1.4 var(--mono); }
+.cta { display: inline-block; background: var(--accent); color: var(--accent-ink); text-decoration: none; font: 600 15px/1 var(--body);
+  padding: 12px 18px; border-radius: 6px; }
+.cta:hover { filter: brightness(1.08); }
+
+.label { font: 500 12.5px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+section { scroll-margin-top: 32px; }
+.about { display: grid; gap: 16px; max-width: 62ch; color: var(--muted); }
+.about strong { color: var(--ink); font-weight: 600; }
+
+.case { display: grid; gap: 18px; padding-block: 8px 48px; }
+.case + .case { border-top: 1px solid var(--line); padding-top: 48px; }
+.shot { display: block; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--surface); aspect-ratio: 16 / 10; max-width: 100%; }
+.shot img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.shot.pixel img { image-rendering: pixelated; }
+.meta { font: 400 13px/1.4 var(--mono); color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.meta .live { color: var(--live); font-weight: 500; }
+.case h3 { font-size: clamp(1.5rem, 3vw, 1.9rem); line-height: 1.15; letter-spacing: -.01em; }
+.case h3 a { color: inherit; text-decoration: none; }
+.case h3 a:hover { color: var(--accent); }
+.lede { font-size: 1.0625rem; max-width: 62ch; }
+.story { display: grid; gap: 12px; margin: 0; max-width: 62ch; }
+.story div { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 16px; }
+.story dt { font: 500 12px/1.9 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.story dd { margin: 0; }
+.stat { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; padding: 14px 16px; background: var(--accent-soft); border-radius: 6px; max-width: 62ch; }
+.stat strong { font: 700 1.6rem/1 var(--display); font-variant-numeric: tabular-nums; color: var(--accent); }
+.stat span { color: var(--ink); font-size: 15px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 0; }
+.tags li { font: 500 12.5px/1 var(--mono); background: var(--accent-soft); color: var(--accent); border-radius: 999px; padding: 6px 10px; }
+.links { display: flex; flex-wrap: wrap; gap: 6px 20px; font: 500 14px/1.4 var(--mono); }
+
+.more { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.more article { display: grid; grid-template-columns: 168px minmax(0, 1fr); gap: 20px; padding-block: 22px; border-bottom: 1px solid var(--line); }
+.more .shot { align-self: start; }
+.more .noshot { aspect-ratio: 16 / 10; border: 1px dashed var(--line); border-radius: 8px; display: grid; place-items: center;
+  font: 500 12px/1.3 var(--mono); color: var(--muted); text-align: center; padding: 8px; }
+.more h3 { font-size: 1.2rem; line-height: 1.25; margin-bottom: 4px; }
+.more p { color: var(--muted); font-size: 15px; margin-bottom: 10px; }
+
+.skills { display: grid; gap: 14px; margin: 0; }
+.skills div { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.skills dt { font: 500 12.5px/1.6 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.skills dd { margin: 0; }
+
+footer { color: var(--muted); font-size: 14px; display: grid; gap: 8px; max-width: 62ch; }
+
+@media (max-width: 900px) {
+  .shell { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .side { position: static; min-height: 0; padding-block: 48px 8px; gap: 20px; }
+  .toc { display: none; }
+  .contact { margin-top: 4px; }
+  .content { padding-block: 40px 48px; gap: 64px; }
 }
-.filters button:hover { border-color: var(--accent); }
-.filters button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
-.filters b { font: 500 12px/1 var(--mono); opacity: .7; margin-left: 6px; }
-
-.ledger { display: grid; border-top: 1px solid var(--line); }
-.project {
-  display: grid; grid-template-columns: minmax(0, 1fr) 210px; gap: 14px 40px;
-  padding-block: 32px; border-bottom: 1px solid var(--line);
+@media (max-width: 560px) {
+  .story div, .skills div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .more article { grid-template-columns: minmax(0, 1fr); gap: 12px; }
 }
-.project > * { min-width: 0; }
-.main { display: grid; gap: 12px; }
-.spec { font: 400 13px/1.4 var(--mono); color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; }
-.status { font-weight: 500; display: inline-flex; align-items: center; gap: 6px; }
-.status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
-.status.live { color: var(--live); }
-.status.wip { color: var(--wip); }
-h2 { font-size: clamp(1.5rem, 3.4vw, 2rem); line-height: 1.15; font-weight: 700; letter-spacing: -.01em; }
-.summary { margin: 0; max-width: 62ch; }
-.notes { margin: 0; padding-left: 1.1em; color: var(--muted); display: grid; gap: 4px; max-width: 62ch; }
-.stack { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 4px 0 0; }
-.stack li { font: 400 12.5px/1 var(--mono); border: 1px solid var(--line); border-radius: 4px; padding: 6px 8px; color: var(--muted); }
-.links { display: flex; flex-wrap: wrap; gap: 6px 18px; font: 500 14px/1.4 var(--mono); }
-
-.proof { align-self: start; border-left: 2px solid var(--accent); padding-left: 16px; display: grid; gap: 4px; }
-.proof strong { font: 700 clamp(1.9rem, 4vw, 2.4rem)/1 var(--display); font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
-.proof span { font-size: 14px; color: var(--muted); line-height: 1.4; }
-
-footer { font: 400 13px/1.5 var(--mono); color: var(--muted); }
-
-@media (max-width: 720px) {
-  .wrap { padding-block: 32px 48px; gap: 36px; }
-  .project { grid-template-columns: minmax(0, 1fr); padding-block: 26px; }
-  .proof { order: -1; }
-}
-@media (prefers-reduced-motion: no-preference) {
-  .filters button { transition: background-color .15s, border-color .15s, color .15s; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .toc a::before { transition: none; }
 }
 </style>
 
-<div class="wrap">
-  <header>
-    <div class="eyebrow">Portfolio · 2026</div>
-    <h1>I build <em>tools that work on real data</em>, and games.</h1>
-    <p class="pitch">Hi, I'm Eben. I design and ship complete projects on my own: a live public-data website, a web-scraping
-      product with a public API, an AI research pipeline that checks its own citations, and several Unity games.</p>
+<div class="shell">
+  <aside class="side">
+    <div>
+      <h1>Eben</h1>
+    </div>
+    <p class="role">Software Engineer · Full-stack, data &amp; AI</p>
+    <p class="pitch">I build complete products on my own, from data pipeline to deployment, and keep them running.</p>
+    <span class="avail">Open to software engineering roles</span>
+    <nav aria-label="Sections">
+      <ul class="toc">
+        <li><a href="#about">About</a></li>
+        <li><a href="#work">Featured work</a></li>
+        <li><a href="#more">More projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+      </ul>
+    </nav>
     <div class="contact" id="contact"></div>
-  </header>
+  </aside>
 
-  <nav class="filterbar" aria-label="Filter projects">
-    <span>Show</span>
-    <div class="filters" id="filters"></div>
-  </nav>
+  <div class="content">
+    <section id="about" aria-label="About">
+      <div class="label">About</div>
+      <div class="about">
+        <p>I like problems where the data is messy and the answer has to be right. My most recent site,
+          <strong>Who Owns Your Hospital?</strong>, turns Medicare ownership records into a map anyone can search
+          to see whether private equity owns their local hospital. I wrote the classification, built the site,
+          and run the server it lives on.</p>
+        <p>I also built <strong>Scrape Anything</strong>, a web-scraping product with billing, a public API and
+          webhooks, and an <strong>AI research pipeline</strong> that refuses to print a number or claim it can't
+          trace to a source. When I want to make something just for fun, I make games in Unity.</p>
+        <p>I work in TypeScript, Python and C#, and I care about tests, honest limits, and software that
+          does what it says.</p>
+      </div>
+    </section>
 
-  <main class="ledger" id="ledger"></main>
+    <section id="work" aria-label="Featured work">
+      <div class="label">Featured work</div>
+      <div id="featured"></div>
+    </section>
 
-  <footer>Built by hand: one HTML file, no framework. Last updated October 2026.</footer>
+    <section id="more" aria-label="More projects">
+      <div class="label">More projects</div>
+      <div class="more" id="others"></div>
+    </section>
+
+    <section id="skills" aria-label="Skills">
+      <div class="label">Skills</div>
+      <dl class="skills">
+        <div><dt>Languages</dt><dd>TypeScript, JavaScript, Python, C#, SQL, HTML, CSS</dd></div>
+        <div><dt>Web</dt><dd>Next.js, React, Node.js, REST APIs, webhooks, Stripe billing, Playwright</dd></div>
+        <div><dt>Data &amp; AI</dt><dd>pandas, SQLite, LLM pipelines (Claude, local models with Ollama), structured extraction, data validation</dd></div>
+        <div><dt>Infrastructure</dt><dd>Linux (Debian) VPS, nginx, TLS with Let's Encrypt, Redis job queues, static hosting</dd></div>
+        <div><dt>Games</dt><dd>Unity 6, 2D and 3D, WebGL builds, Netcode for GameObjects, procedural art and audio</dd></div>
+        <div><dt>Practices</dt><dd>Automated tests and benchmarks, Git, reproducible data builds, privacy-respecting analytics</dd></div>
+      </dl>
+    </section>
+
+    <footer>
+      <p id="footer-contact"></p>
+      <p>Hand-built as one HTML file with no framework, so it loads fast. Updated October 2026.</p>
+    </footer>
+  </div>
 </div>
 
 <script>
-// Contact links: empty values are skipped, so fill these in before publishing.
+// Contact links: entries with an empty href are hidden. Fill these in before publishing.
 const CONTACT = [
-  { label: "GitHub", href: "https://github.com/thisguyhere123" },
-  { label: "Email", href: "" },
+  { label: "Email", href: "" },          // e.g. "mailto:you@example.com"
+  { label: "Resume", href: "" },         // a link to the PDF
   { label: "LinkedIn", href: "" },
-  { label: "Resume (PDF)", href: "" },
+  { label: "GitHub", href: "https://github.com/thisguyhere123" },
 ];
 
-const KINDS = { web: "Web", data: "Data", ai: "AI", games: "Games" };
+const FEATURED = [
+  {
+    name: "Who Owns Your Hospital?", href: "https://whoownsyourhospital.site", img: "img/hospital.webp",
+    alt: "Map of U.S. hospitals colored by private-equity ownership, with search and filters",
+    meta: ["Live", "2026", "Solo project"],
+    lede: "A free website that shows whether private equity owns a hospital near you. Search 9,400+ U.S. hospitals by ZIP code, city or name.",
+    problem: "Medicare publishes hospital ownership data, but as a raw file of thousands of owner records that ordinary people can't read.",
+    built: "Python rules that sort every hospital enrollment into Confirmed, Potential or No PE indicators, cross-checked against SEC filings, feeding a fast static map and tables.",
+    result: "Live since October 2026 on a server I configured myself (nginx, HTTPS, strict security headers) with visitor stats that store no IP addresses.",
+    stat: ["9,161", "Medicare enrollments classified, each into exactly one list, rebuilt by script"],
+    tags: ["Python", "pandas", "JavaScript", "Leaflet", "MapLibre", "nginx", "Linux"],
+    links: [{ label: "Visit the live site", href: "https://whoownsyourhospital.site" }],
+  },
+  {
+    name: "Scrape Anything", img: "img/scraper.webp",
+    alt: "Scrape Anything landing page: turn any website into a spreadsheet",
+    meta: ["In development", "2026", "Solo project"],
+    lede: "A web-scraping product: paste a link, pick the data, and get a clean table in Excel, CSV or Google Sheets.",
+    problem: "Most scraping tools need code, a browser extension, or tricks that break websites' rules.",
+    built: "A Next.js app with a separate worker that drives a real browser, finds tables automatically, follows pagination and tabs, fills search forms, and watches pages for changes. Subscription billing, a public REST API and signed webhooks.",
+    result: "Legal by design: it respects robots.txt and crawl delays, blocks private network addresses, and reports CAPTCHAs instead of evading them.",
+    stat: ["28 / 28", "benchmark pages scraped correctly by the automated test suite"],
+    tags: ["Next.js", "TypeScript", "Playwright", "SQLite", "Redis / BullMQ", "Stripe"],
+    links: [],
+  },
+  {
+    name: "Market Research Swarm", img: "img/swarm.webp",
+    alt: "Positioning chart from the generated report: competitor price against feature breadth",
+    meta: ["2026", "Solo project"],
+    lede: "A multi-agent AI pipeline that researched the market for Scrape Anything and wrote a full strategy report with charts and footnotes.",
+    problem: "AI-written research sounds confident even when it makes numbers up.",
+    built: "Seven research workstreams collect and extract documents with a local model on my own GPU. A frontier model writes the report under a hard weekly budget, and a model from a different family reviews its work.",
+    result: "Every number in the report comes from a computed metrics table, and any sentence without a valid source is dropped before the PDF is rendered.",
+    stat: ["152", "automated tests, including checks that no AI-typed number reaches the report"],
+    tags: ["Python", "LLM agents", "Ollama", "SQLite", "pydantic", "matplotlib"],
+    links: [],
+  },
+  {
+    name: "Ghost//Grid", img: "img/ghostgrid.webp",
+    alt: "Ghost//Grid game screen: neon hacking terminal with upgrade tree and generators",
+    meta: ["Game", "2026", "Solo project"],
+    lede: "A cyberpunk idle game that runs in the browser: hack, buy generators, unlock upgrades and cyberware, and climb a global leaderboard.",
+    problem: "Idle games need huge numbers and must keep counting while the tab is in the background.",
+    built: "A custom big-number type for values past a normal double's limit, progress based on real elapsed time, save export and import, and a LootLocker leaderboard.",
+    result: "Ships as a WebGL build for itch.io and as a Windows download, each from a one-click build menu.",
+    stat: ["> 10³⁰⁸", "late-game values handled without overflow"],
+    tags: ["Unity", "C#", "WebGL", "LootLocker"],
+    links: [],
+  },
+];
 
-const PROJECTS = [
+const OTHERS = [
   {
-    name: "Who Owns Your Hospital?", kinds: ["data", "web"], status: "live", year: "2026", role: "Solo",
-    summary: "A free search site that shows whether private equity owns a U.S. hospital near you. Search by ZIP code or hospital name.",
-    proof: ["9,161", "Medicare hospital enrollments sorted into Confirmed, Potential and No PE indicators"],
-    notes: [
-      "Classification rules built from the CMS Hospital All Owners file, then cross-checked against SEC filings.",
-      "Every enrollment lands in exactly one list, and the counts are reproduced by a script, not by hand.",
-      "Fully static site on my own VPS: nginx, Let's Encrypt, strict security headers, and visitor stats that store no IP addresses.",
-    ],
-    stack: ["Python", "pandas", "JavaScript", "Leaflet", "MapLibre", "nginx", "Debian VPS"],
-    links: [{ label: "whoownsyourhospital.site", href: "https://whoownsyourhospital.site" }],
+    name: "Clown Show", img: "img/clownshow.webp", pixel: true, alt: "Pixel-art office of clown characters at desks",
+    text: "A live visualizer for the research pipeline: each AI agent is a clown in an office, reacting to real events streamed over a WebSocket. Original pixel art generated by script.",
+    tags: ["Unity 6", "C#", "WebSockets", "Python"],
   },
   {
-    name: "Scrape Anything", kinds: ["web"], status: "wip", year: "2026", role: "Solo",
-    summary: "A web-scraping service: paste a URL and get its tables as clean data, with exports, monitors that watch for changes, and a public REST API.",
-    proof: ["28 / 28", "benchmark pages scraped correctly by the automated test suite"],
-    notes: [
-      "Finds tables on any page automatically, follows pagination and tabs, fills search forms, and opens each row's detail page.",
-      "Legal by design: respects robots.txt and crawl delays, blocks private addresses, and reports CAPTCHAs instead of evading them.",
-      "Background job queue, subscription billing with three plans, API keys and signed webhooks.",
-    ],
-    stack: ["Next.js", "TypeScript", "Playwright", "SQLite", "BullMQ / Redis", "Stripe"],
-    links: [],
+    name: "Gnome Builders",
+    text: "A desktop companion. Tiny gnomes build a house in the corner of your screen, watch it collapse, and build it again, at about 1% CPU. All art and sound are generated in code.",
+    tags: ["Unity 6", "C#", "Win32", "Physics2D"],
   },
   {
-    name: "Market Research Swarm", kinds: ["ai", "data"], status: "wip", year: "2026", role: "Solo",
-    summary: "A multi-agent research pipeline that studied the market for Scrape Anything and wrote a full consulting-style report, with every claim tied to a source.",
-    proof: ["152", "automated tests, including checks that no number in the report was typed by an AI"],
-    notes: [
-      "Seven research workstreams collect and extract documents; a local 14B model handles bulk work on my own GPU.",
-      "A frontier model acts as lead consultant under a hard weekly budget, and a model from a different family critiques its work.",
-      "Numbers come only from a computed metrics table; sentences without a valid citation are dropped before the PDF renders.",
-    ],
-    stack: ["Python", "SQLite", "Ollama", "Claude Agent SDK", "pydantic", "Jinja2", "matplotlib"],
-    links: [],
-  },
-  {
-    name: "Clown Show", kinds: ["games", "ai"], status: "wip", year: "2026", role: "Solo",
-    summary: "A live visualizer for the research swarm: each AI agent is a clown in an office, reacting to real pipeline events as they happen.",
-    proof: ["≤ 30 fps", "frame cap so the visualizer shares the GPU with the local AI model"],
-    notes: [
-      "Watch-only by design: it subscribes to a local WebSocket event stream and can never send commands to the pipeline.",
-      "Original pixel-art sprites generated by a Python script, at most 16 colours each.",
-      "Agents send in-world emails written from a voice library, each ending with the event's real numbers.",
-    ],
-    stack: ["Unity 6", "C#", "WebSockets", "Python (sprite generation)"],
-    links: [],
-  },
-  {
-    name: "Ghost//Grid", kinds: ["games"], status: "wip", year: "2026", role: "Solo",
-    summary: "A cyberpunk idle game for the browser: build up generators, install cyberware, unlock perks and lore, and climb a global leaderboard.",
-    proof: ["> 10³⁰⁸", "late-game values, past a normal double's limit, held by a custom big-number type"],
-    notes: [
-      "Progress runs on real elapsed time, so it stays correct when the browser throttles a background tab.",
-      "Global leaderboard through LootLocker guest logins; saves can be exported and imported.",
-      "Built for itch.io as a WebGL game, with a one-click build menu for web and Windows.",
-    ],
-    stack: ["Unity", "C#", "WebGL", "LootLocker"],
-    links: [],
-  },
-  {
-    name: "Gnome Builders", kinds: ["games"], status: "wip", year: "2026", role: "Solo",
-    summary: "A desktop companion: a tiny crew of gnomes builds a house in the corner of your screen, watches it collapse, and builds it again.",
-    proof: ["~1% CPU", "while running all day in a transparent, always-on-top window"],
-    notes: [
-      "Windows integration through Win32: click-through transparency, tray menu, global hotkeys.",
-      "Utility-AI gnome brains, team carries, random events and Physics2D collapses.",
-      "All sprites, animations, voices and sound effects are generated in code, with no art assets.",
-    ],
-    stack: ["Unity 6", "C#", "Win32 interop", "Physics2D"],
-    links: [],
-  },
-  {
-    name: "Western Friendslop", kinds: ["games"], status: "wip", year: "2026", role: "Solo",
-    summary: "A co-op multiplayer western where the town reacts: townsfolk witness crimes, factions take sides, and the sheriff comes looking.",
-    proof: ["Co-op", "online multiplayer with Unity Netcode and Multiplayer Services"],
-    notes: [
-      "Town AI with witnesses, alert levels, cover, factions and a sheriff that responds to incidents.",
-      "Buildings get generated interiors, furniture and stocked stores with generated names.",
-      "Breakable glass and hinged doors driven by impact physics.",
-    ],
-    stack: ["Unity 6", "C#", "Netcode for GameObjects", "URP"],
-    links: [],
+    name: "Western Friendslop",
+    text: "A co-op multiplayer western where the town reacts: townsfolk witness crimes, factions take sides, and the sheriff comes looking. Generated building interiors and breakable glass.",
+    tags: ["Unity 6", "C#", "Netcode for GameObjects"],
   },
 ];
 
 const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
-const link = (l) => { const a = el("a", null, l.label); a.href = l.href; a.target = "_blank"; a.rel = "noopener"; return a; };
+const link = (l) => { const a = el("a", null, l.label); a.href = l.href; if (/^https?:/.test(l.href)) { a.target = "_blank"; a.rel = "noopener"; } return a; };
+const tagList = (tags) => { const ul = el("ul", "tags"); tags.forEach((t) => ul.append(el("li", null, t))); return ul; };
+const shot = (p, eager) => {
+  const box = el(p.href ? "a" : "div", "shot" + (p.pixel ? " pixel" : ""));
+  if (p.href) { box.href = p.href; box.target = "_blank"; box.rel = "noopener"; box.setAttribute("aria-label", p.name); }
+  const img = el("img"); img.src = p.img; img.alt = p.alt; img.width = 960; img.height = 600;
+  img.loading = eager ? "eager" : "lazy"; img.decoding = "async";
+  box.append(img); return box;
+};
 
+const contacts = CONTACT.filter((c) => c.href);
 const contact = document.getElementById("contact");
-CONTACT.filter((c) => c.href).forEach((c) => contact.append(link(c)));
+const email = contacts.find((c) => c.label === "Email");
+if (email) { const a = link(email); a.className = "cta"; a.textContent = "Email me"; contact.append(a); }
+contacts.filter((c) => c !== email).forEach((c) => contact.append(link(c)));
+const foot = document.getElementById("footer-contact");
+foot.append("Want to talk? ");
+contacts.forEach((c, i) => { if (i) foot.append(" · "); foot.append(link(c)); });
 
-const ledger = document.getElementById("ledger");
-const rows = PROJECTS.map((p) => {
-  const row = el("article", "project");
-  row.dataset.kinds = p.kinds.join(" ");
-  const main = el("div", "main");
-  const spec = el("div", "spec");
-  spec.append(el("span", "status " + p.status, p.status === "live" ? "Live" : "In development"),
-    el("span", null, p.year), el("span", null, p.role), el("span", null, p.kinds.map((k) => KINDS[k]).join(" / ")));
-  const notes = el("ul", "notes");
-  p.notes.forEach((n) => notes.append(el("li", null, n)));
-  const stack = el("ul", "stack");
-  p.stack.forEach((s) => stack.append(el("li", null, s)));
-  main.append(spec, el("h2", null, p.name), el("p", "summary", p.summary), notes, stack);
-  if (p.links.length) { const ls = el("div", "links"); p.links.forEach((l) => ls.append(link(l))); main.append(ls); }
-  const proof = el("div", "proof");
-  proof.append(el("strong", null, p.proof[0]), el("span", null, p.proof[1]));
-  row.append(main, proof);
-  ledger.append(row);
-  return row;
+const featured = document.getElementById("featured");
+FEATURED.forEach((p, i) => {
+  const c = el("article", "case");
+  const h = el("h3");
+  if (p.href) { const a = link({ label: p.name, href: p.href }); h.append(a); } else h.textContent = p.name;
+  const meta = el("div", "meta");
+  p.meta.forEach((m) => meta.append(el("span", m === "Live" ? "live" : null, m === "Live" ? "● Live" : m)));
+  const story = el("dl", "story");
+  [["Problem", p.problem], ["What I built", p.built], ["Result", p.result]].forEach(([k, v]) => {
+    const row = el("div"); row.append(el("dt", null, k), el("dd", null, v)); story.append(row);
+  });
+  const stat = el("div", "stat"); stat.append(el("strong", null, p.stat[0]), el("span", null, p.stat[1]));
+  c.append(shot(p, i === 0), meta, h, el("p", "lede", p.lede), story, stat, tagList(p.tags));
+  if (p.links.length) { const ls = el("div", "links"); p.links.forEach((l) => ls.append(link({ label: l.label + " ↗", href: l.href }))); c.append(ls); }
+  featured.append(c);
 });
 
-const filters = document.getElementById("filters");
-const choices = [["all", "All", PROJECTS.length], ...Object.entries(KINDS).map(([k, v]) => [k, v, PROJECTS.filter((p) => p.kinds.includes(k)).length])];
-const buttons = choices.map(([key, label, n]) => {
-  const b = el("button", null, label);
-  b.type = "button"; b.id = "filter-" + key; b.append(el("b", null, String(n)));
-  b.addEventListener("click", () => show(key));
-  filters.append(b);
-  return [key, b];
+const others = document.getElementById("others");
+OTHERS.forEach((p) => {
+  const a = el("article");
+  if (p.img) a.append(shot(p)); else a.append(el("div", "noshot", p.name));
+  const body = el("div");
+  body.append(el("h3", null, p.name), el("p", null, p.text), tagList(p.tags));
+  a.append(body); others.append(a);
 });
-function show(key) {
-  buttons.forEach(([k, b]) => b.setAttribute("aria-pressed", String(k === key)));
-  rows.forEach((r) => { r.hidden = key !== "all" && !r.dataset.kinds.split(" ").includes(key); });
+
+// Highlight the section in view in the left-hand nav (wide screens only; the nav is hidden on phones).
+const tocLinks = [...document.querySelectorAll(".toc a")];
+if ("IntersectionObserver" in window) {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) tocLinks.forEach((a) => a.classList.toggle("on", a.getAttribute("href") === "#" + e.target.id));
+    });
+  }, { rootMargin: "-40% 0px -55% 0px" });
+  document.querySelectorAll("section[id]").forEach((s) => io.observe(s));
 }
-show("all");
 </script>
