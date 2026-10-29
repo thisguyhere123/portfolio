@@ -1,0 +1,255 @@
+<title>Eben's Projects</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Projects by Eben: web tools, public-data sites, AI research pipelines and Unity games.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a project ledger. Name and pitch on top, a filter row, then one full-width entry per project
+   with a mono spec line, a single proof figure, what's notable, and the stack. */
+:root {
+  --bg: #f3f5f4;
+  --surface: #ffffff;
+  --ink: #142019;
+  --muted: #56655e;
+  --line: #d3dcd7;
+  --accent: #2448d8;
+  --accent-ink: #ffffff;
+  --live: #1d7a46;
+  --wip: #8a5a00;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1412; --surface: #151d1a; --ink: #e4ebe7; --muted: #9aaba3; --line: #2a3632;
+    --accent: #8ea6ff; --accent-ink: #0e1412; --live: #5fd08f; --wip: #e3b45a; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1412; --surface: #151d1a; --ink: #e4ebe7; --muted: #9aaba3; --line: #2a3632;
+  --accent: #8ea6ff; --accent-ink: #0e1412; --live: #5fd08f; --wip: #e3b45a; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font: 16px/1.6 var(--body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 980px; margin: 0 auto; padding-block: 56px 72px; display: grid; gap: 48px; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; }
+
+header { display: grid; gap: 18px; }
+.eyebrow { font: 500 13px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-size: clamp(2.4rem, 7vw, 4.4rem); line-height: 1.02; font-weight: 700; letter-spacing: -.02em; max-width: 16ch; }
+h1 em { font-style: normal; color: var(--accent); }
+.pitch { font-size: 1.125rem; color: var(--muted); max-width: 60ch; margin: 0; }
+.contact { display: flex; flex-wrap: wrap; gap: 10px 22px; font: 500 14px/1.4 var(--mono); }
+
+.filterbar, .filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.filterbar > span { font: 500 13px/1 var(--mono); color: var(--muted); margin-right: 6px; }
+.filters button {
+  font: 500 14px/1 var(--body); color: var(--ink); background: transparent; cursor: pointer;
+  border: 1px solid var(--line); border-radius: 999px; padding: 9px 14px;
+}
+.filters button:hover { border-color: var(--accent); }
+.filters button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.filters b { font: 500 12px/1 var(--mono); opacity: .7; margin-left: 6px; }
+
+.ledger { display: grid; border-top: 1px solid var(--line); }
+.project {
+  display: grid; grid-template-columns: minmax(0, 1fr) 210px; gap: 14px 40px;
+  padding-block: 32px; border-bottom: 1px solid var(--line);
+}
+.project > * { min-width: 0; }
+.main { display: grid; gap: 12px; }
+.spec { font: 400 13px/1.4 var(--mono); color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; }
+.status { font-weight: 500; display: inline-flex; align-items: center; gap: 6px; }
+.status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.status.live { color: var(--live); }
+.status.wip { color: var(--wip); }
+h2 { font-size: clamp(1.5rem, 3.4vw, 2rem); line-height: 1.15; font-weight: 700; letter-spacing: -.01em; }
+.summary { margin: 0; max-width: 62ch; }
+.notes { margin: 0; padding-left: 1.1em; color: var(--muted); display: grid; gap: 4px; max-width: 62ch; }
+.stack { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 4px 0 0; }
+.stack li { font: 400 12.5px/1 var(--mono); border: 1px solid var(--line); border-radius: 4px; padding: 6px 8px; color: var(--muted); }
+.links { display: flex; flex-wrap: wrap; gap: 6px 18px; font: 500 14px/1.4 var(--mono); }
+
+.proof { align-self: start; border-left: 2px solid var(--accent); padding-left: 16px; display: grid; gap: 4px; }
+.proof strong { font: 700 clamp(1.9rem, 4vw, 2.4rem)/1 var(--display); font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+.proof span { font-size: 14px; color: var(--muted); line-height: 1.4; }
+
+footer { font: 400 13px/1.5 var(--mono); color: var(--muted); }
+
+@media (max-width: 720px) {
+  .wrap { padding-block: 32px 48px; gap: 36px; }
+  .project { grid-template-columns: minmax(0, 1fr); padding-block: 26px; }
+  .proof { order: -1; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .filters button { transition: background-color .15s, border-color .15s, color .15s; }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Portfolio · 2026</div>
+    <h1>I build <em>tools that work on real data</em>, and games.</h1>
+    <p class="pitch">Hi, I'm Eben. I design and ship complete projects on my own: a live public-data website, a web-scraping
+      product with a public API, an AI research pipeline that checks its own citations, and several Unity games.</p>
+    <div class="contact" id="contact"></div>
+  </header>
+
+  <nav class="filterbar" aria-label="Filter projects">
+    <span>Show</span>
+    <div class="filters" id="filters"></div>
+  </nav>
+
+  <main class="ledger" id="ledger"></main>
+
+  <footer>Built by hand: one HTML file, no framework. Last updated October 2026.</footer>
+</div>
+
+<script>
+// Contact links: empty values are skipped, so fill these in before publishing.
+const CONTACT = [
+  { label: "GitHub", href: "https://github.com/thisguyhere123" },
+  { label: "Email", href: "" },
+  { label: "LinkedIn", href: "" },
+  { label: "Resume (PDF)", href: "" },
+];
+
+const KINDS = { web: "Web", data: "Data", ai: "AI", games: "Games" };
+
+const PROJECTS = [
+  {
+    name: "Who Owns Your Hospital?", kinds: ["data", "web"], status: "live", year: "2026", role: "Solo",
+    summary: "A free search site that shows whether private equity owns a U.S. hospital near you. Search by ZIP code or hospital name.",
+    proof: ["9,161", "Medicare hospital enrollments sorted into Confirmed, Potential and No PE indicators"],
+    notes: [
+      "Classification rules built from the CMS Hospital All Owners file, then cross-checked against SEC filings.",
+      "Every enrollment lands in exactly one list, and the counts are reproduced by a script, not by hand.",
+      "Fully static site on my own VPS: nginx, Let's Encrypt, strict security headers, and visitor stats that store no IP addresses.",
+    ],
+    stack: ["Python", "pandas", "JavaScript", "Leaflet", "MapLibre", "nginx", "Debian VPS"],
+    links: [{ label: "whoownsyourhospital.site", href: "https://whoownsyourhospital.site" }],
+  },
+  {
+    name: "Scrape Anything", kinds: ["web"], status: "wip", year: "2026", role: "Solo",
+    summary: "A web-scraping service: paste a URL and get its tables as clean data, with exports, monitors that watch for changes, and a public REST API.",
+    proof: ["28 / 28", "benchmark pages scraped correctly by the automated test suite"],
+    notes: [
+      "Finds tables on any page automatically, follows pagination and tabs, fills search forms, and opens each row's detail page.",
+      "Legal by design: respects robots.txt and crawl delays, blocks private addresses, and reports CAPTCHAs instead of evading them.",
+      "Background job queue, subscription billing with three plans, API keys and signed webhooks.",
+    ],
+    stack: ["Next.js", "TypeScript", "Playwright", "SQLite", "BullMQ / Redis", "Stripe"],
+    links: [],
+  },
+  {
+    name: "Market Research Swarm", kinds: ["ai", "data"], status: "wip", year: "2026", role: "Solo",
+    summary: "A multi-agent research pipeline that studied the market for Scrape Anything and wrote a full consulting-style report, with every claim tied to a source.",
+    proof: ["152", "automated tests, including checks that no number in the report was typed by an AI"],
+    notes: [
+      "Seven research workstreams collect and extract documents; a local 14B model handles bulk work on my own GPU.",
+      "A frontier model acts as lead consultant under a hard weekly budget, and a model from a different family critiques its work.",
+      "Numbers come only from a computed metrics table; sentences without a valid citation are dropped before the PDF renders.",
+    ],
+    stack: ["Python", "SQLite", "Ollama", "Claude Agent SDK", "pydantic", "Jinja2", "matplotlib"],
+    links: [],
+  },
+  {
+    name: "Clown Show", kinds: ["games", "ai"], status: "wip", year: "2026", role: "Solo",
+    summary: "A live visualizer for the research swarm: each AI agent is a clown in an office, reacting to real pipeline events as they happen.",
+    proof: ["≤ 30 fps", "frame cap so the visualizer shares the GPU with the local AI model"],
+    notes: [
+      "Watch-only by design: it subscribes to a local WebSocket event stream and can never send commands to the pipeline.",
+      "Original pixel-art sprites generated by a Python script, at most 16 colours each.",
+      "Agents send in-world emails written from a voice library, each ending with the event's real numbers.",
+    ],
+    stack: ["Unity 6", "C#", "WebSockets", "Python (sprite generation)"],
+    links: [],
+  },
+  {
+    name: "Ghost//Grid", kinds: ["games"], status: "wip", year: "2026", role: "Solo",
+    summary: "A cyberpunk idle game for the browser: build up generators, install cyberware, unlock perks and lore, and climb a global leaderboard.",
+    proof: ["> 10³⁰⁸", "late-game values, past a normal double's limit, held by a custom big-number type"],
+    notes: [
+      "Progress runs on real elapsed time, so it stays correct when the browser throttles a background tab.",
+      "Global leaderboard through LootLocker guest logins; saves can be exported and imported.",
+      "Built for itch.io as a WebGL game, with a one-click build menu for web and Windows.",
+    ],
+    stack: ["Unity", "C#", "WebGL", "LootLocker"],
+    links: [],
+  },
+  {
+    name: "Gnome Builders", kinds: ["games"], status: "wip", year: "2026", role: "Solo",
+    summary: "A desktop companion: a tiny crew of gnomes builds a house in the corner of your screen, watches it collapse, and builds it again.",
+    proof: ["~1% CPU", "while running all day in a transparent, always-on-top window"],
+    notes: [
+      "Windows integration through Win32: click-through transparency, tray menu, global hotkeys.",
+      "Utility-AI gnome brains, team carries, random events and Physics2D collapses.",
+      "All sprites, animations, voices and sound effects are generated in code, with no art assets.",
+    ],
+    stack: ["Unity 6", "C#", "Win32 interop", "Physics2D"],
+    links: [],
+  },
+  {
+    name: "Western Friendslop", kinds: ["games"], status: "wip", year: "2026", role: "Solo",
+    summary: "A co-op multiplayer western where the town reacts: townsfolk witness crimes, factions take sides, and the sheriff comes looking.",
+    proof: ["Co-op", "online multiplayer with Unity Netcode and Multiplayer Services"],
+    notes: [
+      "Town AI with witnesses, alert levels, cover, factions and a sheriff that responds to incidents.",
+      "Buildings get generated interiors, furniture and stocked stores with generated names.",
+      "Breakable glass and hinged doors driven by impact physics.",
+    ],
+    stack: ["Unity 6", "C#", "Netcode for GameObjects", "URP"],
+    links: [],
+  },
+];
+
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+const link = (l) => { const a = el("a", null, l.label); a.href = l.href; a.target = "_blank"; a.rel = "noopener"; return a; };
+
+const contact = document.getElementById("contact");
+CONTACT.filter((c) => c.href).forEach((c) => contact.append(link(c)));
+
+const ledger = document.getElementById("ledger");
+const rows = PROJECTS.map((p) => {
+  const row = el("article", "project");
+  row.dataset.kinds = p.kinds.join(" ");
+  const main = el("div", "main");
+  const spec = el("div", "spec");
+  spec.append(el("span", "status " + p.status, p.status === "live" ? "Live" : "In development"),
+    el("span", null, p.year), el("span", null, p.role), el("span", null, p.kinds.map((k) => KINDS[k]).join(" / ")));
+  const notes = el("ul", "notes");
+  p.notes.forEach((n) => notes.append(el("li", null, n)));
+  const stack = el("ul", "stack");
+  p.stack.forEach((s) => stack.append(el("li", null, s)));
+  main.append(spec, el("h2", null, p.name), el("p", "summary", p.summary), notes, stack);
+  if (p.links.length) { const ls = el("div", "links"); p.links.forEach((l) => ls.append(link(l))); main.append(ls); }
+  const proof = el("div", "proof");
+  proof.append(el("strong", null, p.proof[0]), el("span", null, p.proof[1]));
+  row.append(main, proof);
+  ledger.append(row);
+  return row;
+});
+
+const filters = document.getElementById("filters");
+const choices = [["all", "All", PROJECTS.length], ...Object.entries(KINDS).map(([k, v]) => [k, v, PROJECTS.filter((p) => p.kinds.includes(k)).length])];
+const buttons = choices.map(([key, label, n]) => {
+  const b = el("button", null, label);
+  b.type = "button"; b.id = "filter-" + key; b.append(el("b", null, String(n)));
+  b.addEventListener("click", () => show(key));
+  filters.append(b);
+  return [key, b];
+});
+function show(key) {
+  buttons.forEach(([k, b]) => b.setAttribute("aria-pressed", String(k === key)));
+  rows.forEach((r) => { r.hidden = key !== "all" && !r.dataset.kinds.split(" ").includes(key); });
+}
+show("all");
+</script>
