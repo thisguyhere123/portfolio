@@ -7,7 +7,15 @@ Completely separate from the projects it describes: never modify them from here,
 - `src/page.html`: the page (content only: title, style, markup, script; no doctype/html/head/body).
   Projects and contact links are the `PROJECTS` and `CONTACT` arrays in its script. Empty contact links are hidden.
 - `node build.mjs` wraps it into `site/index.html` (a full document). Deploy the `site/` folder to any static host.
-- Private preview on claude.ai: https://claude.ai/artifact/HE8QAa5ZsbiYsVsToWEWh3 (republish `src/page.html`).
+- `src/img/*.webp`: 960×600 project screenshots (Playwright captures, cropped with Pillow; pixel art kept unscaled).
+- Private preview on claude.ai: https://claude.ai/artifact/HE8QAa5ZsbiYsVsToWEWh3. To republish, copy `src/page.html`
+  and `src/img/` into a scratchpad folder and publish from there with that `url`, `root` and the `img/*` files.
+
+## Design basis (researched 2026-10-29)
+Modelled on the most-cited hired-developer portfolio pattern (sticky left intro + nav, scrolling right column) and
+hiring-manager checklists: role, stack and availability above the fold; projects in the first two sections; each
+project shows a screenshot, problem / what I built / result, one real number, stack, and live/code links; email in
+the intro and footer; fast (no framework); works on phones.
 
 ## Rules
 - Every claim and number on a project must come from that project's own files (README, docs, code); no padding.
