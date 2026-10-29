@@ -3,12 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="canonical" href="https://thisguyhere123.github.io/portfolio/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Eben Butts · AI & Security">
+<meta property="og:description" content="Eben Butts, software engineer focused on AI and security: LLM pipelines hardened against prompt injection, SSRF-safe web services, and hardened deployments.">
+<meta property="og:url" content="https://thisguyhere123.github.io/portfolio/">
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
 <body>
-<title>Eben's Projects</title>
+<title>Eben Butts</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Eben, software engineer: full-stack web products, public-data sites, AI pipelines and Unity games, built and shipped end to end.">
+<meta name="description" content="Eben Butts, software engineer focused on AI and security: LLM pipelines hardened against prompt injection, SSRF-safe web services, and hardened deployments.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -137,11 +142,12 @@ footer { color: var(--muted); font-size: 14px; display: grid; gap: 8px; max-widt
 <div class="shell">
   <aside class="side">
     <div>
-      <h1>Eben</h1>
+      <h1>Eben Butts</h1>
     </div>
-    <p class="role">Software Engineer · Full-stack, data &amp; AI</p>
-    <p class="pitch">I build complete products on my own, from data pipeline to deployment, and keep them running.</p>
-    <span class="avail">Open to software engineering roles</span>
+    <p class="role">Software Engineer · AI &amp; Security</p>
+    <p class="pitch">I build AI systems and web services that stay safe when their input is hostile: scraped pages,
+      untrusted URLs and model output.</p>
+    <span class="avail">Open to AI and cybersecurity roles</span>
     <nav aria-label="Sections">
       <ul class="toc">
         <li><a href="#about">About</a></li>
@@ -157,14 +163,14 @@ footer { color: var(--muted); font-size: 14px; display: grid; gap: 8px; max-widt
     <section id="about" aria-label="About">
       <div class="label">About</div>
       <div class="about">
-        <p>I like problems where the data is messy and the answer has to be right. My most recent site,
-          <strong>Who Owns Your Hospital?</strong>, turns Medicare ownership records into a map anyone can search
-          to see whether private equity owns their local hospital. I wrote the classification, built the site,
-          and run the server it lives on.</p>
-        <p>I also built <strong>Scrape Anything</strong>, a web-scraping product with billing, a public API and
-          webhooks, and an <strong>AI research pipeline</strong> that refuses to print a number or claim it can't
-          trace to a source. When I want to make something just for fun, I make games in Unity.</p>
-        <p>I work in TypeScript, Python and C#, and I care about tests, honest limits, and software that
+        <p>Most of what I build reads content from the open web, so I design every system on the assumption
+          that its input is hostile. My <strong>multi-agent AI research pipeline</strong> treats every scraped
+          page as untrusted data: hidden text is stripped and each document is fenced off so it can't inject
+          instructions into the model. Its report can't print a number or claim it can't trace to a source.</p>
+        <p><strong>Scrape Anything</strong>, my web-scraping service, fetches any URL a user hands it, so it
+          blocks private networks and cloud metadata addresses, re-checks every redirect, and signs its webhooks.
+          <strong>Who Owns Your Hospital?</strong> is a live public-data site I run on my own hardened Linux server.</p>
+        <p>I work in Python, TypeScript and C#, and I care about tests, least privilege, and software that
           does what it says.</p>
       </div>
     </section>
@@ -182,12 +188,12 @@ footer { color: var(--muted); font-size: 14px; display: grid; gap: 8px; max-widt
     <section id="skills" aria-label="Skills">
       <div class="label">Skills</div>
       <dl class="skills">
-        <div><dt>Languages</dt><dd>TypeScript, JavaScript, Python, C#, SQL, HTML, CSS</dd></div>
-        <div><dt>Web</dt><dd>Next.js, React, Node.js, REST APIs, webhooks, Stripe billing, Playwright</dd></div>
-        <div><dt>Data &amp; AI</dt><dd>pandas, SQLite, LLM pipelines (Claude, local models with Ollama), structured extraction, data validation</dd></div>
-        <div><dt>Infrastructure</dt><dd>Linux (Debian) VPS, nginx, TLS with Let's Encrypt, Redis job queues, static hosting</dd></div>
-        <div><dt>Games</dt><dd>Unity 6, 2D and 3D, WebGL builds, Netcode for GameObjects, procedural art and audio</dd></div>
-        <div><dt>Practices</dt><dd>Automated tests and benchmarks, Git, reproducible data builds, privacy-respecting analytics</dd></div>
+        <div><dt>AI &amp; LLMs</dt><dd>Multi-agent pipelines, prompt-injection defences, structured output with schema validation, model routing and budgets, cross-model review, local models (Ollama on ROCm), Claude Agent SDK</dd></div>
+        <div><dt>App security</dt><dd>SSRF prevention (private ranges, cloud metadata, redirect and DNS re-checks), scrypt password hashing, timing-safe comparison, hashed API keys, HMAC-signed webhooks, httpOnly cookies</dd></div>
+        <div><dt>Hardening</dt><dd>Content-Security-Policy, HSTS, COOP/CORP, Permissions-Policy, nginx on Debian, TLS with Let's Encrypt, least-privilege file ownership, privacy-preserving logging</dd></div>
+        <div><dt>Languages</dt><dd>Python, TypeScript, JavaScript, C#, SQL</dd></div>
+        <div><dt>Web &amp; data</dt><dd>Next.js, Node.js, REST APIs, Playwright, SQLite, Redis / BullMQ, pandas, Stripe</dd></div>
+        <div><dt>Practices</dt><dd>Automated tests and benchmarks, reproducible data builds, Git; Unity and C# for games</dd></div>
       </dl>
     </section>
 
@@ -201,68 +207,61 @@ footer { color: var(--muted); font-size: 14px; display: grid; gap: 8px; max-widt
 <script>
 // Contact links: entries with an empty href are hidden. Fill these in before publishing.
 const CONTACT = [
-  { label: "Email", href: "" },          // e.g. "mailto:you@example.com"
+  { label: "Email", href: "mailto:eben1999@gmail.com" },
   { label: "Resume", href: "" },         // a link to the PDF
-  { label: "LinkedIn", href: "" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/eben-butts-21a62227b" },
   { label: "GitHub", href: "https://github.com/thisguyhere123" },
 ];
 
 const FEATURED = [
   {
-    name: "Who Owns Your Hospital?", href: "https://whoownsyourhospital.site", img: "img/hospital.webp",
-    alt: "Map of U.S. hospitals colored by private-equity ownership, with search and filters",
-    meta: ["Live", "2026", "Solo project"],
-    lede: "A free website that shows whether private equity owns a hospital near you. Search 9,400+ U.S. hospitals by ZIP code, city or name.",
-    problem: "Medicare publishes hospital ownership data, but as a raw file of thousands of owner records that ordinary people can't read.",
-    built: "Python rules that sort every hospital enrollment into Confirmed, Potential or No PE indicators, cross-checked against SEC filings, feeding a fast static map and tables.",
-    result: "Live since October 2026 on a server I configured myself (nginx, HTTPS, strict security headers) with visitor stats that store no IP addresses.",
-    stat: ["9,161", "Medicare enrollments classified, each into exactly one list, rebuilt by script"],
-    tags: ["Python", "pandas", "JavaScript", "Leaflet", "MapLibre", "nginx", "Linux"],
-    links: [{ label: "Visit the live site", href: "https://whoownsyourhospital.site" }],
+    name: "Market Research Swarm", img: "img/swarm.webp",
+    alt: "Python code that wraps scraped documents in nonce-tagged untrusted blocks before they reach the model",
+    meta: ["AI", "2026", "Solo project"],
+    lede: "A multi-agent AI pipeline that researched a real market from hundreds of scraped web pages and wrote a full strategy report with charts and footnotes.",
+    problem: "Scraped pages can carry hidden prompt-injection text, and AI-written research sounds confident even when it makes numbers up.",
+    built: "Every scraped page is treated as data, never instructions: hidden elements, HTML comments and invisible Unicode are stripped, and each document is fenced with a per-call random nonce so a page can't close the block early. Bulk extraction runs on a local model on my own GPU; a frontier model writes under a hard weekly budget, and a model from a different family reviews its work.",
+    result: "Every number in the report comes from a computed metrics table, quotes are checked word for word against the stored page, and any sentence without a valid source is dropped before the PDF renders.",
+    stat: ["152", "automated tests, including checks that no AI-typed number reaches the report"],
+    tags: ["Python", "LLM agents", "Prompt-injection defence", "Ollama", "pydantic", "SQLite"],
+    links: [],
   },
   {
     name: "Scrape Anything", img: "img/scraper.webp",
     alt: "Scrape Anything landing page: turn any website into a spreadsheet",
-    meta: ["In development", "2026", "Solo project"],
-    lede: "A web-scraping product: paste a link, pick the data, and get a clean table in Excel, CSV or Google Sheets.",
-    problem: "Most scraping tools need code, a browser extension, or tricks that break websites' rules.",
-    built: "A Next.js app with a separate worker that drives a real browser, finds tables automatically, follows pagination and tabs, fills search forms, and watches pages for changes. Subscription billing, a public REST API and signed webhooks.",
-    result: "Legal by design: it respects robots.txt and crawl delays, blocks private network addresses, and reports CAPTCHAs instead of evading them.",
+    meta: ["Security", "In development", "Solo project"],
+    lede: "A web-scraping service with a public API: paste a link, pick the data, and get a clean table in Excel, CSV or Google Sheets.",
+    problem: "A service that fetches any URL a stranger gives it is a textbook SSRF target: one request to 169.254.169.254 or an internal host can leak cloud credentials.",
+    built: "Every URL is resolved and checked against loopback, private, link-local and carrier-grade NAT ranges, then re-checked on every redirect and inside the headless browser for every sub-request and frame. Webhook targets are re-resolved on each send, since DNS can change.",
+    result: "Passwords hashed with scrypt and compared in constant time, API keys stored only as SHA-256 hashes, webhooks signed with HMAC-SHA256, httpOnly session cookies. It also respects robots.txt and reports CAPTCHAs instead of evading them.",
     stat: ["28 / 28", "benchmark pages scraped correctly by the automated test suite"],
-    tags: ["Next.js", "TypeScript", "Playwright", "SQLite", "Redis / BullMQ", "Stripe"],
+    tags: ["TypeScript", "Next.js", "SSRF protection", "Playwright", "Redis / BullMQ", "Stripe"],
     links: [],
   },
   {
-    name: "Market Research Swarm", img: "img/swarm.webp",
-    alt: "Positioning chart from the generated report: competitor price against feature breadth",
-    meta: ["2026", "Solo project"],
-    lede: "A multi-agent AI pipeline that researched the market for Scrape Anything and wrote a full strategy report with charts and footnotes.",
-    problem: "AI-written research sounds confident even when it makes numbers up.",
-    built: "Seven research workstreams collect and extract documents with a local model on my own GPU. A frontier model writes the report under a hard weekly budget, and a model from a different family reviews its work.",
-    result: "Every number in the report comes from a computed metrics table, and any sentence without a valid source is dropped before the PDF is rendered.",
-    stat: ["152", "automated tests, including checks that no AI-typed number reaches the report"],
-    tags: ["Python", "LLM agents", "Ollama", "SQLite", "pydantic", "matplotlib"],
-    links: [],
-  },
-  {
-    name: "Ghost//Grid", img: "img/ghostgrid.webp",
-    alt: "Ghost//Grid game screen: neon hacking terminal with upgrade tree and generators",
-    meta: ["Game", "2026", "Solo project"],
-    lede: "A cyberpunk idle game that runs in the browser: hack, buy generators, unlock upgrades and cyberware, and climb a global leaderboard.",
-    problem: "Idle games need huge numbers and must keep counting while the tab is in the background.",
-    built: "A custom big-number type for values past a normal double's limit, progress based on real elapsed time, save export and import, and a LootLocker leaderboard.",
-    result: "Ships as a WebGL build for itch.io and as a Windows download, each from a one-click build menu.",
-    stat: ["> 10³⁰⁸", "late-game values handled without overflow"],
-    tags: ["Unity", "C#", "WebGL", "LootLocker"],
-    links: [],
+    name: "Who Owns Your Hospital?", href: "https://whoownsyourhospital.site", img: "img/hospital.webp",
+    alt: "Map of U.S. hospitals colored by private-equity ownership, with search and filters",
+    meta: ["Live", "Data", "Solo project"],
+    lede: "A free public website that shows whether private equity owns a hospital near you. Search 9,400+ U.S. hospitals by ZIP code, city or name.",
+    problem: "Medicare publishes hospital ownership as a raw file of thousands of owner records that ordinary people can't read.",
+    built: "Python rules that sort every hospital enrollment into Confirmed, Potential or No PE indicators, cross-checked against SEC filings, feeding a static map and tables. Deployed on a Debian server I set up myself with nginx and Let's Encrypt.",
+    result: "Hardened from the start: a deny-by-default Content-Security-Policy, HSTS, frame blocking, cross-origin isolation headers, root-owned site files, and visitor analytics that never store an IP address. Internal files that name individuals are kept out of the public build.",
+    stat: ["9,161", "Medicare enrollments classified, each into exactly one list, rebuilt by script"],
+    tags: ["Python", "pandas", "nginx", "Linux", "CSP / HSTS", "Leaflet"],
+    links: [{ label: "Visit the live site", href: "https://whoownsyourhospital.site" }],
   },
 ];
 
 const OTHERS = [
   {
     name: "Clown Show", img: "img/clownshow.webp", pixel: true, alt: "Pixel-art office of clown characters at desks",
-    text: "A live visualizer for the research pipeline: each AI agent is a clown in an office, reacting to real events streamed over a WebSocket. Original pixel art generated by script.",
+    text: "A live visualizer for the AI research pipeline: each agent is a clown in an office, reacting to real events. Watch-only by design: it subscribes to a local event stream and has no way to send commands back.",
     tags: ["Unity 6", "C#", "WebSockets", "Python"],
+  },
+  {
+    name: "Ghost//Grid", img: "img/ghostgrid.webp", alt: "Ghost//Grid game screen: neon hacking terminal with upgrade tree and generators",
+    text: "A cyberpunk hacking-themed idle game for the browser, with a custom big-number type for values past 10³⁰⁸, progress that survives throttled background tabs, and a global leaderboard.",
+    tags: ["Unity", "C#", "WebGL", "LootLocker"],
   },
   {
     name: "Gnome Builders",
@@ -294,7 +293,10 @@ if (email) { const a = link(email); a.className = "cta"; a.textContent = "Email 
 contacts.filter((c) => c !== email).forEach((c) => contact.append(link(c)));
 const foot = document.getElementById("footer-contact");
 foot.append("Want to talk? ");
-contacts.forEach((c, i) => { if (i) foot.append(" · "); foot.append(link(c)); });
+contacts.forEach((c, i) => {
+  if (i) foot.append(" · ");
+  foot.append(link(c === email ? { label: c.href.replace("mailto:", ""), href: c.href } : c));
+});
 
 const featured = document.getElementById("featured");
 FEATURED.forEach((p, i) => {
