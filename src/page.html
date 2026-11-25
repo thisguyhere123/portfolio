@@ -1,6 +1,6 @@
 <title>Eben Butts</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Eben Butts, software engineer focused on AI and security: LLM pipelines hardened against prompt injection, SSRF-safe web services, and hardened deployments.">
+<meta name="description" content="Eben Butts, IT student (B.S., WGU) with CompTIA A+ and LPI Linux Essentials, seeking help desk, IT support or IT internship roles. Software developer experience at FedEx; runs a public hospital-ownership site with about 20,000 visits a month.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -48,6 +48,11 @@ p { margin: 0; }
 .side { position: sticky; top: env(safe-area-inset-top, 0px); align-self: start; min-height: 100vh; padding-block: 88px 48px;
   display: flex; flex-direction: column; gap: 28px; }
 .content { padding-block: 88px 64px; display: grid; gap: 88px; min-width: 0; }
+/* Short laptop screens: tighten the sticky column so the contact links stay on screen. */
+@media (min-width: 901px) and (max-height: 880px) {
+  .side { padding-block: 40px 24px; gap: 16px; }
+  .side .toc a { padding: 5px 0; }
+}
 
 h1 { font-size: clamp(2.6rem, 5vw, 3.6rem); line-height: 1; font-weight: 700; letter-spacing: -.02em; }
 .role { font: 600 1.25rem/1.3 var(--display); }
@@ -107,6 +112,26 @@ section { scroll-margin-top: 32px; }
 .skills dt { font: 500 12.5px/1.6 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .skills dd { margin: 0; }
 
+.certs-mini { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 0; }
+.certs-mini li { font: 500 12.5px/1 var(--mono); border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px; }
+.certs-mini li.wip { color: var(--muted); border-style: dashed; }
+.where { color: var(--muted); font-size: 14px; }
+
+.jobs { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.job { display: grid; gap: 10px; padding-block: 24px; border-bottom: 1px solid var(--line); }
+.job-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 16px; }
+.job h3 { font-size: 1.3rem; line-height: 1.25; }
+.job h3 span { color: var(--muted); font-weight: 600; }
+.job ul:not(.tags) { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; max-width: 62ch; }
+.job .stat { margin-top: 4px; }
+
+.creds { display: grid; gap: 0; margin: 0; border-top: 1px solid var(--line); }
+.creds div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; padding-block: 14px; border-bottom: 1px solid var(--line); }
+.creds dt { font-weight: 600; }
+.creds dt small { display: block; font-weight: 400; color: var(--muted); font-size: 14px; }
+.creds dd { margin: 0; font: 500 13px/1.6 var(--mono); color: var(--muted); text-align: right; }
+.creds dd.done { color: var(--live); }
+
 footer { color: var(--muted); font-size: 14px; display: grid; gap: 8px; max-width: 62ch; }
 
 @media (max-width: 900px) {
@@ -118,6 +143,8 @@ footer { color: var(--muted); font-size: 14px; display: grid; gap: 8px; max-widt
 }
 @media (max-width: 560px) {
   .story div, .skills div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .creds div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .creds dd { text-align: left; }
   .more article { grid-template-columns: minmax(0, 1fr); gap: 12px; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -131,16 +158,24 @@ footer { color: var(--muted); font-size: 14px; display: grid; gap: 8px; max-widt
     <div>
       <h1>Eben Butts</h1>
     </div>
-    <p class="role">Software Engineer · AI &amp; Security</p>
-    <p class="pitch">I build AI systems and web services that stay safe when their input is hostile: scraped pages,
-      untrusted URLs and model output.</p>
-    <span class="avail">Open to AI and cybersecurity roles</span>
+    <p class="role">IT Support · Cybersecurity</p>
+    <p class="pitch">IT student at Western Governors University with professional software development experience at
+      FedEx. I build and run a public website that gets about 20,000 visits a month.</p>
+    <ul class="certs-mini" aria-label="Certifications">
+      <li>CompTIA A+</li>
+      <li>LPI Linux Essentials</li>
+      <li class="wip">Security+ · Dec 2026</li>
+    </ul>
+    <span class="avail">Open to help desk, IT support and IT internship roles</span>
+    <p class="where">Sammamish, WA · remote, hybrid or on-site · can relocate within 100 miles</p>
     <nav aria-label="Sections">
       <ul class="toc">
         <li><a href="#about">About</a></li>
-        <li><a href="#work">Featured work</a></li>
-        <li><a href="#more">More projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#work">Projects</a></li>
+        <li><a href="#certs">Certifications</a></li>
         <li><a href="#skills">Skills</a></li>
+        <li><a href="#more">More projects</a></li>
       </ul>
     </nav>
     <div class="contact" id="contact"></div>
@@ -150,21 +185,79 @@ footer { color: var(--muted); font-size: 14px; display: grid; gap: 8px; max-widt
     <section id="about" aria-label="About">
       <div class="label">About</div>
       <div class="about">
-        <p>Most of what I build reads content from the open web, so I design every system on the assumption
-          that its input is hostile. My <strong>multi-agent AI research pipeline</strong> treats every scraped
-          page as untrusted data: hidden text is stripped and each document is fenced off so it can't inject
-          instructions into the model. Its report can't print a number or claim it can't trace to a source.</p>
-        <p><strong>Scrape Anything</strong>, my web-scraping service, fetches any URL a user hands it, so it
-          blocks private networks and cloud metadata addresses, re-checks every redirect, and signs its webhooks.
-          <strong>Who Owns Your Hospital?</strong> is a live public-data site I run on my own hardened Linux server.</p>
-        <p>I work in Python, TypeScript and C#, and I care about tests, least privilege, and software that
-          does what it says.</p>
+        <p>I'm finishing a B.S. in Information Technology at Western Governors University (spring 2027) and looking
+          for a <strong>help desk, IT support or IT internship</strong> role. I hold CompTIA A+ and LPI Linux
+          Essentials, I'm working toward Security+, and I've spent 3+ years on networking and security in my home lab.</p>
+        <p>I've been a <strong>FedEx</strong> courier since 2023, troubleshooting handheld scanners and delivery
+          software every day and solving customer problems on the spot. As a software developer there, I built a
+          truck-washing system that replaced an outdated process, working from what managers and station staff told
+          me was broken.</p>
+        <p>Outside work I built and run <strong>Who Owns Your Hospital?</strong>, a free public site that shows who
+          owns 9,400+ U.S. hospitals, on a Linux server I hardened myself. I also build AI and security projects:
+          a research pipeline that resists prompt injection and a web scraper that blocks SSRF. I care about
+          protecting user data and explaining technical things clearly to people who aren't technical.</p>
       </div>
     </section>
 
-    <section id="work" aria-label="Featured work">
-      <div class="label">Featured work</div>
+    <section id="experience" aria-label="Experience">
+      <div class="label">Experience</div>
+      <div class="jobs">
+        <article class="job">
+          <div class="job-head"><h3>Software Developer <span>· FedEx</span></h3><span class="meta">Issaquah, WA · 2025 – 2026</span></div>
+          <ul>
+            <li>Identified the problem, then built and maintained a database and decision algorithm that tracks the
+              station's delivery vehicles and decides which ones need washing, replacing an outdated process.</li>
+            <li>Gathered requirements from management and station staff and focused on the issues they reported.</li>
+          </ul>
+          <div class="stat"><strong>70+</strong><span>trucks now covered with auditable records, up from the same 10–20 being washed before</span></div>
+          <ul class="tags"><li>Python</li><li>MySQL</li><li>Electron</li><li>JavaScript</li><li>HTML / CSS</li></ul>
+        </article>
+        <article class="job">
+          <div class="job-head"><h3>Courier <span>· FedEx</span></h3><span class="meta">Issaquah, WA · 2023 – present</span></div>
+          <ul>
+            <li>Use handheld scanners and delivery software daily, and troubleshoot them in the field when they fail.</li>
+            <li>Resolve customer questions and delivery problems on the spot, keeping every interaction clear and professional.</li>
+            <li>Work to a strict schedule, timed to the minute every day.</li>
+          </ul>
+        </article>
+        <article class="job">
+          <div class="job-head"><h3>Home lab</h3><span class="meta">3+ years</span></div>
+          <ul>
+            <li>Hands-on networking and security practice with Windows and Linux machines, virtual machines, DNS, DHCP and VPN configuration.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="work" aria-label="Projects">
+      <div class="label">Projects</div>
       <div id="featured"></div>
+    </section>
+
+    <section id="certs" aria-label="Certifications and education">
+      <div class="label">Certifications &amp; education</div>
+      <dl class="creds">
+        <div><dt>CompTIA A+</dt><dd class="done">Certified</dd></div>
+        <div><dt>LPI Linux Essentials</dt><dd class="done">Certified</dd></div>
+        <div><dt>CompTIA Security+</dt><dd>In progress · expected Dec 2026</dd></div>
+        <div><dt>Google IT Support Professional Certificate</dt><dd>In progress · expected Dec 2026</dd></div>
+        <div><dt>B.S. Information Technology, Western Governors University
+          <small>Washington College Grant recipient · Excellence award for coursework</small></dt><dd>2023 – 2027 (spring)</dd></div>
+      </dl>
+    </section>
+
+    <section id="skills" aria-label="Skills">
+      <div class="label">Skills</div>
+      <dl class="skills">
+        <div><dt>Support</dt><dd>Troubleshooting, customer service, clear communication with non-technical users, OS installation and configuration, organization</dd></div>
+        <div><dt>Systems</dt><dd>Windows, Linux (Debian), macOS, iOS, Android, virtual machines</dd></div>
+        <div><dt>Networking</dt><dd>TCP/IP fundamentals, DNS, DHCP, VPN configuration, nginx, TLS with Let's Encrypt</dd></div>
+        <div><dt>Microsoft &amp; ITSM</dt><dd>Active Directory, Entra ID, Intune, Exchange Online, Microsoft 365, Power BI, Power Automate, ServiceNow</dd></div>
+        <div><dt>Security</dt><dd>Server hardening (Content-Security-Policy, HSTS, least-privilege file ownership, privacy-preserving logging), SSRF prevention, password hashing, signed webhooks, prompt-injection defences</dd></div>
+        <div><dt>Programming</dt><dd>Python, JavaScript, TypeScript, Java, C++, C#, HTML / CSS, SQL</dd></div>
+        <div><dt>Data</dt><dd>MySQL, SQLite, Firebase, pandas, web scraping, data cleaning and matching</dd></div>
+        <div><dt>Tools</dt><dd>Git and GitHub, Playwright, Claude Agent SDK, local AI models (Ollama)</dd></div>
+      </dl>
     </section>
 
     <section id="more" aria-label="More projects">
@@ -172,35 +265,40 @@ footer { color: var(--muted); font-size: 14px; display: grid; gap: 8px; max-widt
       <div class="more" id="others"></div>
     </section>
 
-    <section id="skills" aria-label="Skills">
-      <div class="label">Skills</div>
-      <dl class="skills">
-        <div><dt>AI &amp; LLMs</dt><dd>Multi-agent pipelines, prompt-injection defences, structured output with schema validation, model routing and budgets, cross-model review, local models (Ollama on ROCm), Claude Agent SDK</dd></div>
-        <div><dt>App security</dt><dd>SSRF prevention (private ranges, cloud metadata, redirect and DNS re-checks), scrypt password hashing, timing-safe comparison, hashed API keys, HMAC-signed webhooks, httpOnly cookies</dd></div>
-        <div><dt>Hardening</dt><dd>Content-Security-Policy, HSTS, COOP/CORP, Permissions-Policy, nginx on Debian, TLS with Let's Encrypt, least-privilege file ownership, privacy-preserving logging</dd></div>
-        <div><dt>Languages</dt><dd>Python, TypeScript, JavaScript, C#, SQL</dd></div>
-        <div><dt>Web &amp; data</dt><dd>Next.js, Node.js, REST APIs, Playwright, SQLite, Redis / BullMQ, pandas, Stripe</dd></div>
-        <div><dt>Practices</dt><dd>Automated tests and benchmarks, reproducible data builds, Git; Unity and C# for games</dd></div>
-      </dl>
-    </section>
-
     <footer>
       <p id="footer-contact"></p>
-      <p>Hand-built as one HTML file with no framework, so it loads fast. Updated October 2026.</p>
+      <p>Hand-built as one HTML file with no framework, so it loads fast. Updated November 2026.</p>
     </footer>
   </div>
 </div>
 
 <script>
-// Contact links: entries with an empty href are hidden. Fill these in before publishing.
+// Visit counter: your GoatCounter code (the "eben" in eben.goatcounter.com). Empty = no counting.
+// GoatCounter sets no cookies and stores no IP addresses. Your stats are at https://<code>.goatcounter.com.
+// Open the site once with #toggle-goatcounter on the end of the URL to stop counting your own visits on that browser.
+const GOATCOUNTER_CODE = "ebenbutts";
+
+// Contact links: entries with an empty href are hidden.
 const CONTACT = [
   { label: "Email", href: "mailto:eben1999@gmail.com" },
-  { label: "Resume", href: "" },         // a link to the PDF
+  { label: "Resume", href: "https://docs.google.com/document/d/13YD2uhRCD6OyE4jkhRASHqUuNsB3HKOvxyLpX9-KWKs/edit?usp=sharing" },         // a link to the PDF
   { label: "LinkedIn", href: "https://www.linkedin.com/in/eben-butts-21a62227b" },
   { label: "GitHub", href: "https://github.com/thisguyhere123" },
 ];
 
 const FEATURED = [
+  {
+    name: "Who Owns Your Hospital?", href: "https://whoownsyourhospital.site", img: "img/hospital.webp",
+    alt: "Map of U.S. hospitals colored by private-equity ownership, with search and filters",
+    meta: ["Live", "2026 – present", "Solo project"],
+    lede: "A free public website that maps 9,400+ U.S. hospitals and flags 550+ confirmed private-equity-owned hospitals. Not monetized: it's a public service.",
+    problem: "Medicare publishes hospital ownership as a raw file of thousands of owner records that ordinary people can't read.",
+    built: "A Python data pipeline that combines Medicare (CMS) ownership files, SEC fund filings and Private Equity Stakeholder Project data, using automated name matching to classify every hospital. The site has search by ZIP code, city or name, a location lookup, filters, and downloadable spreadsheets. I deployed it on a Debian server I set up myself with nginx and Let's Encrypt.",
+    result: "Private by design: no cookies, no tracking and no data sales. Hardened with a deny-by-default Content-Security-Policy, HSTS, frame blocking and root-owned site files, and its visitor counts never store an IP address.",
+    stat: ["~20,000", "visits per month"],
+    tags: ["Python", "pandas", "Linux", "nginx", "CSP / HSTS", "Leaflet"],
+    links: [{ label: "Visit the live site", href: "https://whoownsyourhospital.site" }],
+  },
   {
     name: "Market Research Swarm", img: "img/swarm.webp",
     alt: "Python code that wraps scraped documents in nonce-tagged untrusted blocks before they reach the model",
@@ -224,18 +322,6 @@ const FEATURED = [
     stat: ["28 / 28", "benchmark pages scraped correctly by the automated test suite"],
     tags: ["TypeScript", "Next.js", "SSRF protection", "Playwright", "Redis / BullMQ", "Stripe"],
     links: [],
-  },
-  {
-    name: "Who Owns Your Hospital?", href: "https://whoownsyourhospital.site", img: "img/hospital.webp",
-    alt: "Map of U.S. hospitals colored by private-equity ownership, with search and filters",
-    meta: ["Live", "Data", "Solo project"],
-    lede: "A free public website that shows whether private equity owns a hospital near you. Search 9,400+ U.S. hospitals by ZIP code, city or name.",
-    problem: "Medicare publishes hospital ownership as a raw file of thousands of owner records that ordinary people can't read.",
-    built: "Python rules that sort every hospital enrollment into Confirmed, Potential or No PE indicators, cross-checked against SEC filings, feeding a static map and tables. Deployed on a Debian server I set up myself with nginx and Let's Encrypt.",
-    result: "Hardened from the start: a deny-by-default Content-Security-Policy, HSTS, frame blocking, cross-origin isolation headers, root-owned site files, and visitor analytics that never store an IP address. Internal files that name individuals are kept out of the public build.",
-    stat: ["9,161", "Medicare enrollments classified, each into exactly one list, rebuilt by script"],
-    tags: ["Python", "pandas", "nginx", "Linux", "CSP / HSTS", "Leaflet"],
-    links: [{ label: "Visit the live site", href: "https://whoownsyourhospital.site" }],
   },
 ];
 
@@ -320,5 +406,12 @@ if ("IntersectionObserver" in window) {
     });
   }, { rootMargin: "-40% 0px -55% 0px" });
   document.querySelectorAll("section[id]").forEach((s) => io.observe(s));
+}
+
+if (GOATCOUNTER_CODE && /^[a-z0-9-]+$/.test(GOATCOUNTER_CODE) && location.protocol === "https:") {
+  const gc = document.createElement("script");
+  gc.async = true; gc.src = "https://gc.zgo.at/count.js";
+  gc.dataset.goatcounter = "https://" + GOATCOUNTER_CODE + ".goatcounter.com/count";
+  document.body.append(gc);
 }
 </script>

@@ -12,7 +12,7 @@ const html = `<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="canonical" href="${SITE_URL}">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Eben Butts · AI & Security">
+<meta property="og:title" content="Eben Butts · IT Support & Cybersecurity">
 <meta property="og:description" content="${description}">
 <meta property="og:url" content="${SITE_URL}">
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
